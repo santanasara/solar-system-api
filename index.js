@@ -1,8 +1,10 @@
 
-const express = require('express')
+const express = require('express');
+require('dotenv').config();
 const app = express()
-const port = process.env.PORT || 5000
-
+var cors = require('cors');
+app.use(cors());
+const port = process.env.PORT || 3000;
 var fs = require("fs"), json;
 
 app.get('/', (req, res) => {
@@ -30,12 +32,14 @@ app.get('/', (req, res) => {
                 return item;
             }
         }
+        else if(searchBy === 'id'){
+            if(item.id === parseInt(filter)){
+                return item;
+            }
+        }
         
     });
-    
-    if(result === []){
-        res.sendStatus(404);
-    }
+
     res.send(result);
 });
 })
